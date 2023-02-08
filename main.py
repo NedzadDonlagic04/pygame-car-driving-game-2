@@ -14,6 +14,8 @@ class Game:
 
         self.CLOCK = MyClock(60)
 
+        self.BACKGROUND = BackgroundImage(width, height)
+
     def quit(self) -> None:
         pygame.quit()
         exit()
@@ -24,9 +26,11 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.quit()
 
+            self.BACKGROUND.draw(self.SCREEN)
+
             pygame.display.update()
             self.CLOCK.tick()
 
 if __name__ == '__main__':
-    game = Game(600, 800, 'Car Driver')
+    game = Game(800, 800, 'Car Driver')
     game.run()

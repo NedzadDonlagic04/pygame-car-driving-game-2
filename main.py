@@ -16,6 +16,8 @@ class Game:
 
         self.BACKGROUND = BackgroundImage(width, height)
 
+        self.PLAYER = Player(width, height)
+
     def quit(self) -> None:
         pygame.quit()
         exit()
@@ -27,6 +29,9 @@ class Game:
                     self.quit()
 
             self.BACKGROUND.draw(self.SCREEN)
+
+            self.PLAYER.update()
+            self.PLAYER.draw(self.SCREEN)
 
             pygame.display.update()
             self.CLOCK.tick()

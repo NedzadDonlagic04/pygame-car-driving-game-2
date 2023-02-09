@@ -51,11 +51,20 @@ class Player(pygame.sprite.Sprite):
         
         self.rect = self.image.get_rect( bottomleft = (self.LEFT_BORDER, self.BOTTOM_BORDER) )
 
+        self.renderText()
+
     def onHit(self, damage):
         self.HEALTH -= damage
 
         if self.HEALTH > 100:
             self.HEALTH = 100
+        
+        self.renderText()
+    
+    def renderText(self):
+        font = pygame.font.Font('./fonts/Pixeltype.ttf', 40)
+        self.text = font.render(f'Health: {self.HEALTH}%', False, 'black')
+        self.textRect = self.text.get_rect( topleft = (20, 20))
 
     def update(self) -> None:
         keys = pygame.key.get_pressed()
@@ -82,6 +91,7 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen) -> None:
         screen.blit(self.image, self.rect)
+        screen.blit(self.text, self.textRect)
 
 class Obstacles(pygame.sprite.Sprite):
     # Constants used to represent obstacles
@@ -138,7 +148,7 @@ class Obstacles(pygame.sprite.Sprite):
             choice = random.choice([self.ROCKS, self.SAND, self.OIL, self.FUEL])
 
         self.CURRENT_AMOUNT[choice - 1] -= 1
-        
+
         return choice
     
 

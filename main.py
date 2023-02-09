@@ -47,8 +47,6 @@ class Game:
                 for ob in obstacle:
                     ob.update(self.PLAYER)
 
-            print(self.PLAYER.HEALTH)
-
             self.PLAYER.update()
             self.PLAYER.draw(self.SCREEN)
 

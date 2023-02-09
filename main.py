@@ -16,7 +16,11 @@ class Game:
 
         self.BACKGROUND = BackgroundImage(width, height)
 
-        self.PLAYER = Player(width, height)
+        self.PLAYER = Player(height)
+
+        self.obstacles = pygame.sprite.Group()
+        self.obstaclesSpawnTime = 2000
+        self.obstacleCurrentTime = 0
 
     def quit(self) -> None:
         pygame.quit()
@@ -30,8 +34,26 @@ class Game:
 
             self.BACKGROUND.draw(self.SCREEN)
 
+            if pygame.time.get_ticks() - self.obstacleCurrentTime > self.obstaclesSpawnTime:
+                self.obstacles.add( Obstacles(self.HEIGHT) )
+                self.obstacleCurrentTime = pygame.time.get_ticks()
+            
+            self.obstacles.update()
+            self.obstacles.draw(self.SCREEN)
+
+            # Used for player damage detection
+            obstacle = pygame.sprite.spritecollide(self.PLAYER, self.obstacles, True)
+            if obstacle:
+                for ob in obstacle:
+                    ob.update(self.PLAYER)
+
+            print(self.PLAYER.HEALTH)
+
             self.PLAYER.update()
             self.PLAYER.draw(self.SCREEN)
+
+            if self.PLAYER.HEALTH <= 0:
+                self.quit()
 
             pygame.display.update()
             self.CLOCK.tick()

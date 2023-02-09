@@ -1,6 +1,9 @@
 {
     "cSpell.words": [
         "blit",
-        "bottomleft"
+        "bottomleft",
+        "spritecollide",
+        "topleft",
+        "topright"
     ]
 }
